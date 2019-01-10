@@ -7,8 +7,14 @@ class App extends Component {
     state = {
         persons: [{
             name: "Szymon",
-            age: 36
-        }]
+            age: 35
+        },
+            {
+                name: "Aga",
+                age: 36
+            }],
+        personVisible: false
+
     };
 
     changeNameHandler = (newName) => {
@@ -29,19 +35,31 @@ class App extends Component {
                 }]
             }
         )
-
-
     };
 
+    switchPersonsVisibility = () => {
+        console.log("onchange")
+        this.setState({personVisible: !this.state.personVisible})
+    }
+
     render() {
+        let persons = null;
+
+        if (this.state.personVisible) {
+            persons = this.state.persons.map((person) => {
+                  return  <Person
+                        name={person.name}
+                        age={person.age}
+                    />
+            });
+        }
+
         return (
             <div>
-                <button onClick={this.changeNameHandler.bind(this, 'Aga')}>Click me</button>
-                <Person
-                    name={this.state.persons[0].name}
-                    age={this.state.persons[0].age}
-                    onHobbyChange={this.onHobbyChange}
-                />
+                <button onClick={this.switchPersonsVisibility}>Click me</button>
+                <div>
+                {persons}
+                </div>
             </div>
         );
     }
